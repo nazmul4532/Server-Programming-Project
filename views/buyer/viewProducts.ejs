@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Products</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .product-container {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .product-details {
+            margin-bottom: 10px;
+        }
+
+        .view-details-btn {
+            background-color: #9370DB;
+            color: #fff;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .view-details-btn:hover {
+            background-color: #8a63c3;
+        }
+
+        .logout {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #9370DB;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout:hover {
+            background-color: #8a63c3;
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <%- include('../../utils/buyerNavBar.ejs') %>
+    <h1>Welcome!</h1>
+
+    <% products.forEach(product=> { %>
+        <div class="product-container">
+            <img class="product-image" src="/<%= product.mainImage %>" alt="Image of <%= product.name %>">
+            <h2>
+                <%= product.name %>
+            </h2>
+            <p class="product-details">Description: <%= product.description %>
+            </p>
+            <p class="product-details">Price: <%= product.price %>
+            </p>
+
+            <a class="view-details-btn" href="/buyer/productDetails/<%= product._id %>">View Details</a>
+        </div>
+        <% }) %>
+
+</body>
+
+</html>

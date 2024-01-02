@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Edit Product</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .product-image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .product-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #9370DB;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 300px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 16px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        input[type="button"] {
+            background-color: #DC143C;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        input[type="button"]:hover {
+            background-color: #B22222;
+        }
+
+        a.view-btn {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        a.view-btn input[type="button"] {
+            background-color: #4682B4;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        a.view-btn input[type="button"]:hover {
+            background-color: #4169E1;
+        }
+
+        .logout {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #9370DB;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout:hover {
+            background-color: #8a63c3;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../../utils/sellerNavBar.ejs') %>
+    <form action="/seller/editProduct/<%= product._id %>" method="POST" enctype="multipart/form-data">
+        <h1>Edit Product</h1>
+        <div class="product-image-container">
+            <img class="product-image" src="/<%= product.mainImage %>" alt="Product Main Image">
+        </div>
+        <label for="name">Product Name:</label>
+        <input type="text" id="name" name="name" value="<%= product.name %>" required>
+
+        <label for="description">Product Description:</label>
+        <textarea id="description" name="description"><%= product.description %></textarea>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" value="<%= product.price %>" required>
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" name="quantity" value="<%= product.quantity %>" required>
+
+        <label for="images">Product Images:</label>
+        <input type="file" id="images" name="images" multiple accept="image/*">
+
+        <label for="videos">Product Videos:</label>
+        <input type="file" id="videos" name="videos" multiple accept="video/*">
+
+        <input type="submit" value="Update Product">
+        <input type="button" onclick="confirmDelete()" value="Delete Product">
+        <a class="view-btn" href="/seller/getMedia/<%= product._id %>" target="_blank"><input type="button"
+                value="View Images and Videos"></a>
+    </form>
+
+    <script>
+        function confirmDelete() {
+            console.log('Delete button clicked!');
+            const productId = "<%= product._id %>";
+            const confirmDelete = confirm("Are you sure you want to delete this product?");
+
+
+            if (confirmDelete) {
+                axios.delete(`/seller/deleteProduct/${productId}`)
+                    .then(response => {
+                        if (response.status >= 200 && response.status < 300) {
+
+                            window.location.replace("/seller/dashboard");
+                        } else {
+
+                            throw new Error(`HTTP error! Status: ${response.status}`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error deleting product:', error);
+
+                    });
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

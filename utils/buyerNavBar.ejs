@@ -1,0 +1,49 @@
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+    }
+
+    #navbar {
+        list-style-type: none;
+        margin: 0;
+        padding: 10px;
+        background-color: #333;
+        overflow: hidden;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        text-align: center; /* Center the text within the navbar */
+    }
+
+    #navbar li {
+        display: inline-block; /* Display list items horizontally */
+        margin-right: 20px;
+    }
+
+    #navbar a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+    }
+
+    #navbar a:hover {
+        background-color: #555;
+    }
+
+    /* Add margin to the body to prevent content from being covered by the fixed navbar */
+    body {
+        margin-top: 50px;
+    }
+</style>
+
+<ul id="navbar">
+    <li><a href="/buyer/dashboard">Dashboard</a></li>
+    <li><a href="/buyer/productsPage">View Products</a></li>
+    <li><a href="/buyer/profile">View Profile</a></li>
+    <li><a href="/buyer/logout">Logout</a></li>
+</ul>

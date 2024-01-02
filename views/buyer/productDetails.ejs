@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .product-image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .product-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #9370DB;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: 300px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="file"] {
+            margin-bottom: 16px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 16px;
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        input[type="button"] {
+            background-color: #DC143C;
+            color: #fff;
+            cursor: pointer;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            margin-right: 10px;
+        }
+
+        input[type="button"]:hover {
+            background-color: #B22222;
+        }
+
+        a.view-btn {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        a.view-btn input[type="button"] {
+            background-color: #4682B4;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        a.view-btn input[type="button"]:hover {
+            background-color: #4169E1;
+        }
+
+        .logout {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #9370DB;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout:hover {
+            background-color: #8a63c3;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../../utils/buyerNavBar.ejs') %>
+    <form action="/buyer/buyProduct/<%= product._id %>" method="POST" enctype="multipart/form-data">
+        <h1>Product Details</h1>
+        <div class="product-image-container">
+            <img class="product-image" src="/<%= product.mainImage %>" alt="Product Main Image">
+        </div>
+        <label for="name">Product Name:</label>
+        <input type="text" id="name" name="name" value="<%= product.name %>" required readonly>
+
+        <label for="description">Product Description:</label>
+        <textarea id="description" readonly name="description"><%= product.description %></textarea>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" value="<%= product.price %>" readonly required>
+
+        <input type="button" onclick="confirmPurchase()" value="Buy Product">
+        <a class="view-btn" href="/buyer/getMedia/<%= product._id %>" target="_blank"><input type="button"
+                value="View Images and Videos"></a>
+
+    </form>
+    <script>
+        function confirmPurchase() {
+            const quantityInput = prompt("Enter the quantity you want to purchase:");
+
+            if (quantityInput !== null && !isNaN(quantityInput) && parseInt(quantityInput) > 0) {
+                const confirmedQuantity = parseInt(quantityInput);
+                const shippingAddress = prompt("Enter the shipping address:");
+
+                if (shippingAddress !== null && shippingAddress.trim() !== "") {
+                    const productId = "<%= product._id %>";
+                    const productName = "<%= product.name %>";
+                    const totalPrice = `<%= product.price %>` * confirmedQuantity;
+
+                    const confirmMessage = `Product: ${productName}\nQuantity: ${confirmedQuantity}\nTotal Price: ${totalPrice}\nShipping Address: ${shippingAddress}\n\nConfirm purchase?`;
+                    const isConfirmed = confirm(confirmMessage);
+
+                    if (isConfirmed) {
+                        axios.post(`/buyer/createOrder/${productId}`, {
+                            productName: productName,
+                            totalPrice: totalPrice,
+                            quantity: confirmedQuantity,
+                            shippingAddress: shippingAddress.trim()
+                        })
+                            .then(response => {
+                                if (response.status >= 200 && response.status < 300) {
+                                    window.location.replace("/buyer/orderHistory");
+                                } else {
+                                    throw new Error(`HTTP error! Status: ${response.status}`);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error creating order:', error);
+                            });
+                    } else {
+                        console.log('Purchase canceled.');
+                    }
+                } else {
+                    console.log('Purchase canceled or invalid shipping address entered.');
+                }
+            } else {
+                console.log('Purchase canceled or invalid quantity entered.');
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

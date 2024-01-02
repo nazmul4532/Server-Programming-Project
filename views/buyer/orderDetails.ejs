@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            box-sizing: border-box;
+            margin-top: 20px;
+            max-width: 600px;
+        }
+
+        h1,
+        h2,
+        p {
+            text-align: center;
+            color: #333;
+        }
+
+        .product-image-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .product-image {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid #9370DB;
+        }
+
+        form {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #9370DB;
+            color: #fff;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #8a63c3;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../../utils/buyerNavBar.ejs') %>
+
+    <div class="container">
+
+        <h1>Order Details</h1>
+
+        <p>Product Name: <%= order.product.name %>
+        </p>
+        <p>Product Price: <%= order.product.price %>
+        </p>
+
+        <div class="product-image-container">
+            <img class="product-image" src="/<%= order.product.mainImage %>" alt="Product Image">
+        </div>
+
+        <p>Order Quantity: <%= order.quantity %>
+        </p>
+        <p>Total Price: <%= order.totalPrice %>
+        </p>
+        <p>Status: <%= order.status %>
+        </p>
+
+        <h2>Seller Details</h2>
+        <p>Seller Name: <%= order.seller.name %>
+        </p>
+
+        <form action="/buyer/getMedia/<%= order.product._id %>" method="GET">
+            <button type="submit">View Product Media</button>
+        </form>
+
+
+    </div>
+
+</body>
+
+</html>

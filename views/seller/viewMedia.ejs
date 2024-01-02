@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>View Media</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            width: 100%;
+        }
+
+        .media-container {
+            margin: 10px;
+            text-align: center;
+        }
+
+        .media-container img,
+        .media-container video {
+            max-width: 400px;
+            max-height: 400px;
+            border: 2px solid #9370DB;
+            border-radius: 8px;
+        }
+
+        .logout {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            background-color: #9370DB;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout:hover {
+            background-color: #8a63c3;
+        }
+    </style>
+</head>
+
+<body>
+    <%- include('../../utils/sellerNavBar.ejs') %>
+    <div class="container">
+        <h1>Media Files</h1>
+
+        <% mediaFiles.forEach((mediaFile, index)=> { %>
+            <div class="media-container">
+                <% if (mediaFile.endsWith('.mp4') || mediaFile.endsWith('.webm') || mediaFile.endsWith('.ogg')) { %>
+                    <video width="200" height="200" controls>
+                        <source src="/<%= mediaFile %>" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <% } else if (mediaFile.endsWith('.jpg') || mediaFile.endsWith('.png') ||
+                        mediaFile.endsWith('.jpeg') || mediaFile.endsWith('.gif')) { %>
+                        <img src="/<%= mediaFile %>" alt="Image <%= index + 1 %>">
+                        <% } else { %>
+                            <p>Unsupported file type: <%= mediaFile %>
+                            </p>
+                            <% } %>
+            </div>
+            <% }); %>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Login Page</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #9370DB;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #8a63c3;
+        }
+
+        .google-auth-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .google-auth-button:hover {
+            background-color: #2980b9;
+        }
+
+        .signup-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #EF6CC1F6;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .signup-button:hover {
+            background-color: #D24FAB;
+        }
+
+        .forgot-password-button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            background-color: #c91818;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .forgot-password-button:hover {
+            background-color: #aa0b0b;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/seller/login" method="POST">
+        <h1>Seller Login</h1>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+
+        <input type="submit" value="Login">
+
+        <button class="google-auth-button" onclick="window.location.href='/seller/auth/google'">
+            Authenticate Seller with Google
+        </button>
+        <button class="signup-button" onclick="window.location.href='/seller/register'">
+            Seller Sign Up
+        </button>
+        <button class="forgot-password-button" onclick="window.location.href='/seller/forgot-password'">
+            Forgot Password
+        </button>
+    </form>
+</body>
+
+</html>
