@@ -1,6 +1,6 @@
 # Server Programming Project 
 
-# Online Marketplace
+# Markooz
 
 ## Installation
 
