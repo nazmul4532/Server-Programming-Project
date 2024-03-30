@@ -10,12 +10,6 @@
     git clone https://github.com/nazmul4532/Server-Programming-Project.git
     ```
 
-2. **Navigate to Project Directory:**
-
-    ```bash
-    cd online-marketplace
-    ```
-
 3. **Install Dependencies:**
 
     ```bash
